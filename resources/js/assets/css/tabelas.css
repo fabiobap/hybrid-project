@@ -1,0 +1,7 @@
+th:first-letter {
+    text-transform:capitalize;
+}
+
+.prodCodBreak{
+    width:100px;overflow:hidden;height:50px;line-height:50px;
+}
