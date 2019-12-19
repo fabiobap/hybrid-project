@@ -27,6 +27,7 @@ export const signin = (formValues) => async (dispatch, getState) => {
     try {
         const response = await authApi.post('/login', formValues);
         dispatch({ type: AUTH_USER, payload: response.data.token });
+        dispatch({ type: AUTH_ERROR, payload: '' });
         localStorage.setItem('token', response.data.token);
         history.goBack();
         PopUp.showMessage('success', "Logged in successfully :)");
@@ -37,7 +38,7 @@ export const signin = (formValues) => async (dispatch, getState) => {
     }
 };
 const config = {
-    headers: { Authorization: "Bearer " + localStorage.getItem('token') }
+    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
 }
 export const signout = () => {
     localStorage.removeItem('token');
@@ -101,7 +102,6 @@ export const fetchProductsToPagination = page => async dispatch => {
 
         var pageNum = page ? page : 1;
         const response = await hybridProject.get(`/products/paginate?page=${pageNum}`, config);
-        console.log(response);
         dispatch({
             type: FETCH_PRODUCTS_PAGINATION, payload: response.data.data
         });

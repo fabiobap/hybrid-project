@@ -13,6 +13,11 @@ class ProductList extends React.Component {
 
 
     renderAdmin(product) {
+        if (!this.props.authenticated) {
+            return (
+                <div><Link to={'/react/signin/'}>Sign In</Link> to be able to see this!</div>
+            );
+        }
         return (
             <>
                 <Link to={`/react/product/edit/${product.id}`} className="waves-effect waves-light light-blue darken-4 btn">Edit<Icon right>edit</Icon></Link>
@@ -135,7 +140,8 @@ const mapStateToProps = state => {
     return {
         products: Object.values(state.productsPagination),
         meta: state.meta,
-        errorMessage: state.productsPagination.errorMessage
+        errorMessage: state.productsPagination.errorMessage,
+        authenticated: state.auth.authenticated
     }
 }
 export default connect(mapStateToProps, { fetchProductsToPagination, deleteProduct })(ProductList);

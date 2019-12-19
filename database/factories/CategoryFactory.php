@@ -8,6 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(Category::class, function (Faker $faker) {
     $faker->addProvider(new \Bezhanov\Faker\Provider\Commerce($faker));
     return [
-        'name' => $faker->department.$faker->randomDigit,
+        'name' => $faker->department.$faker->randomDigit.$faker->randomDigit,
     ];
 });

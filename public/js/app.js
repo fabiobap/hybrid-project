@@ -110279,26 +110279,30 @@ var signin = function signin(formValues) {
                   type: _types__WEBPACK_IMPORTED_MODULE_5__["AUTH_USER"],
                   payload: response.data.token
                 });
+                dispatch({
+                  type: _types__WEBPACK_IMPORTED_MODULE_5__["AUTH_ERROR"],
+                  payload: ''
+                });
                 localStorage.setItem('token', response.data.token);
                 _history__WEBPACK_IMPORTED_MODULE_3__["default"].goBack();
                 _components_PopUp__WEBPACK_IMPORTED_MODULE_4__["default"].showMessage('success', "Logged in successfully :)");
-                _context.next = 13;
+                _context.next = 14;
                 break;
 
-              case 10:
-                _context.prev = 10;
+              case 11:
+                _context.prev = 11;
                 _context.t0 = _context["catch"](0);
                 dispatch({
                   type: _types__WEBPACK_IMPORTED_MODULE_5__["AUTH_ERROR"],
                   payload: 'Invalid credentials'
                 });
 
-              case 13:
+              case 14:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 10]]);
+        }, _callee, null, [[0, 11]]);
       }));
 
       return function (_x, _x2) {
@@ -110309,7 +110313,7 @@ var signin = function signin(formValues) {
 };
 var config = {
   headers: {
-    Authorization: "Bearer " + localStorage.getItem('token')
+    Authorization: "Bearer ".concat(localStorage.getItem('token'))
   }
 };
 var signout = function signout() {
@@ -110580,7 +110584,6 @@ var fetchProductsToPagination = function fetchProductsToPagination(page) {
 
               case 4:
                 response = _context8.sent;
-                console.log(response);
                 dispatch({
                   type: _types__WEBPACK_IMPORTED_MODULE_5__["FETCH_PRODUCTS_PAGINATION"],
                   payload: response.data.data
@@ -110589,23 +110592,23 @@ var fetchProductsToPagination = function fetchProductsToPagination(page) {
                   type: _types__WEBPACK_IMPORTED_MODULE_5__["META_PAGINATION"],
                   payload: response.data.meta
                 });
-                _context8.next = 13;
+                _context8.next = 12;
                 break;
 
-              case 10:
-                _context8.prev = 10;
+              case 9:
+                _context8.prev = 9;
                 _context8.t0 = _context8["catch"](0);
                 dispatch({
                   type: _types__WEBPACK_IMPORTED_MODULE_5__["PRODUCT_ERROR"],
                   payload: '401 - Unauthenticated! Please Signin and try again.'
                 });
 
-              case 13:
+              case 12:
               case "end":
                 return _context8.stop();
             }
           }
-        }, _callee8, null, [[0, 10]]);
+        }, _callee8, null, [[0, 9]]);
       }));
 
       return function (_x10) {
@@ -111429,6 +111432,15 @@ function (_Component) {
   }
 
   _createClass(Signin, [{
+    key: "renderErrorMessage",
+    value: function renderErrorMessage() {
+      if (this.props.errorMessage) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "card-panel red darken-4 white-text"
+        }, this.props.errorMessage);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       if (this.props.authenticated) {
@@ -111440,7 +111452,7 @@ function (_Component) {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
-      }, this.props.errorMessage, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, this.renderErrorMessage(), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "col s12",
         onSubmit: handleSubmit(this.onSubmit),
         style: {
@@ -111977,6 +111989,12 @@ function (_React$Component) {
     value: function renderAdmin(category) {
       var _this2 = this;
 
+      if (!this.props.authenticated) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: '/react/signin/'
+        }, "Sign In"), " to be able to see this!");
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/react/category/edit/".concat(category.id),
         className: "waves-effect waves-light light-blue darken-4 btn"
@@ -112096,7 +112114,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     categories: Object.values(state.categoriesPagination),
     meta: state.meta,
-    errorMessage: state.categoriesPagination.errorMessage
+    errorMessage: state.categoriesPagination.errorMessage,
+    authenticated: state.auth.authenticated
   };
 };
 
@@ -112827,6 +112846,12 @@ function (_React$Component) {
     value: function renderAdmin(product) {
       var _this2 = this;
 
+      if (!this.props.authenticated) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
+          to: '/react/signin/'
+        }, "Sign In"), " to be able to see this!");
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__["Link"], {
         to: "/react/product/edit/".concat(product.id),
         className: "waves-effect waves-light light-blue darken-4 btn"
@@ -112966,7 +112991,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     products: Object.values(state.productsPagination),
     meta: state.meta,
-    errorMessage: state.productsPagination.errorMessage
+    errorMessage: state.productsPagination.errorMessage,
+    authenticated: state.auth.authenticated
   };
 };
 

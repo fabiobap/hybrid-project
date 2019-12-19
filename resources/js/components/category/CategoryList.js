@@ -13,6 +13,11 @@ class CategoryList extends React.Component {
 
 
     renderAdmin(category) {
+        if (!this.props.authenticated) {
+            return (
+                <div><Link to={'/react/signin/'}>Sign In</Link> to be able to see this!</div>
+            );
+        }
         return (
             <>
                 <Link to={`/react/category/edit/${category.id}`} className="waves-effect waves-light light-blue darken-4 btn">Edit<Icon right>edit</Icon></Link>
@@ -110,7 +115,6 @@ class CategoryList extends React.Component {
         if (!this.props.categories) {
             return <div>loading...</div>
         }
-
         return (
             <div className="container">
                 {this.renderTable()}
@@ -122,7 +126,8 @@ const mapStateToProps = state => {
     return {
         categories: Object.values(state.categoriesPagination),
         meta: state.meta,
-        errorMessage: state.categoriesPagination.errorMessage
+        errorMessage: state.categoriesPagination.errorMessage,
+        authenticated: state.auth.authenticated
     }
 }
 export default connect(mapStateToProps, { fetchCategoriesToPagination, deleteCategory })(CategoryList);

@@ -10,7 +10,13 @@ class Signin extends Component {
     onSubmit = (formValues) => {
         this.props.signin(formValues);
     }
-
+    renderErrorMessage() {
+        if (this.props.errorMessage) {
+            return (
+                <div className="card-panel red darken-4 white-text">{this.props.errorMessage}</div>
+            );
+        }
+    }
     render() {
         if (this.props.authenticated) {
             return (
@@ -21,8 +27,8 @@ class Signin extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    {this.props.errorMessage}
-                    <form className="col s12" onSubmit={handleSubmit(this.onSubmit)} style={{marginTop:'30px'}}>
+                    {this.renderErrorMessage()}
+                    <form className="col s12" onSubmit={handleSubmit(this.onSubmit)} style={{ marginTop: '30px' }}>
                         <div className="row">
                             <div className="input-field col s6">
                                 <Icon className="material-icons prefix">contact_mail</Icon>
@@ -50,7 +56,7 @@ class Signin extends Component {
                         </div>
                         <div className="center-align">
 
-                        <Button className="btn waves-effect waves-light">Sign In!
+                            <Button className="btn waves-effect waves-light">Sign In!
                         </Button>
                         </div>
                     </form>
