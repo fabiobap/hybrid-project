@@ -40,6 +40,6 @@
         "react-reduction": "^1.0.0",
         "react-router-dom": "^5.0.0",
         "react-select": "^3.0.8",
-        "validator": "^10.11.0"
+        "validator": "^13.7.0"
     }
 }
